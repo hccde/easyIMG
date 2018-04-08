@@ -1,0 +1,4 @@
+<view class="container">
+  <image src="{{icon}}" class="icon"></image>
+  <slot></slot>
+</view>

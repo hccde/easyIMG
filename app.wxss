@@ -1,0 +1,7 @@
+page {
+  color: #495363;
+  background-color: #F2F2F5;
+  padding: 0 16rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}

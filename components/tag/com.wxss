@@ -1,0 +1,19 @@
+.tags-list{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.tags-list li {
+  font-size: 20rpx;  
+  border: 1px solid #0A1D3D;
+  margin-right: 20rpx;
+  padding: 0rpx 0.5em;
+  border-radius: 1em; 
+}
+.tags-list li {
+  content: ' ';
+  height: 100%;
+}
+.tags-list li:last-of-type{
+  margin-right: 0rpx;
+}

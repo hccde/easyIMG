@@ -1,0 +1,6 @@
+<view class="input-warp">
+  <view class="input-inner">
+    <input class="input" type="{{type}}" focus="{{focus}}" value="{{value}}" placeholder="{{placeholder}}" bindinput="onInput"/>
+    <image class="clear" src="../../assets/icon-clear.png" bindtap="onTapClear" wx:if="{{value.length > 0}}"></image>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+.number {
+  border: 2rpx solid #BDBDBD;
+  border-radius: 10rpx;
+  width: 94rpx;
+  height: 94rpx;
+  box-sizing: border-box;
+  position: relative;
+  line-height: 92rpx;
+  text-align: center;
+  font-size: 44rpx;
+  color: #212121;
+}
+
+.number-focus::before {
+  position: absolute;
+  content: '';
+  width: 5rpx;
+  height: 48rpx;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1F6ECD;
+  animation-name: twinkle;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+}
+
+@keyframes twinkle {
+  0% {opacity: 1;}
+  50% {opacity: 1;}
+  100% {opacity: 0;}
+}

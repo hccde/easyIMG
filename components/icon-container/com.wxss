@@ -1,0 +1,14 @@
+.container {
+  position: relative;
+  padding: 0 0 0 40rpx;
+  width: 100%;
+}
+
+.icon {
+  width: 24rpx;
+  height: 24rpx;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

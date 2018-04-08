@@ -1,0 +1,7 @@
+<view class="list">
+  <div class="list-item" wx:for="{{list}}" wx:key="{{index}}" data-key="{{index}}" bindtap="onTap">
+    <view class="f14 c0A1D3D">{{item.title}}</view>
+    <view class="f12 cADB5C1 mt5">{{item.subTitle}}</view>
+    <span class="arrow-right"></span>
+  </div>
+</view>

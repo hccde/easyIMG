@@ -1,0 +1,12 @@
+.seats {
+
+}
+
+.seat {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.seat + .seat {
+  margin-left: 10rpx;
+}

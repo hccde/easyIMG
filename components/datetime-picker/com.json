@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "text-in-input": "/components/text-in-input/com"
+  }
+}

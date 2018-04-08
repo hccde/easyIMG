@@ -1,0 +1,3 @@
+<view bindtap="call">
+    <i class="iconfont icon-tele {{size}}" style="color:{{disabled?'#ADB5C1;':'#0A1D3D;'}}"></i>
+</view>

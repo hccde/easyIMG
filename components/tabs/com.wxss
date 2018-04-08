@@ -1,0 +1,21 @@
+.tabs-navs {
+  display: flex;
+  background-color: #ffffff;
+}
+
+.tabs-nav {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.tabs-nav-inner {
+  display: inline-block;
+  padding: 0 40rpx;
+  line-height: 72rpx;
+  border-bottom: 4rpx solid transparent;
+}
+
+.tabs-nav-active > .tabs-nav-inner {
+  color: #4E89E9;
+  border-bottom-color: #4E89E9;
+}

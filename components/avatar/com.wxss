@@ -1,0 +1,37 @@
+.avatar{
+  display: inline-block;
+  position: relative;
+}
+.small {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+.middle {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.large {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+.sex-icon{
+  position: absolute;
+  bottom: 10rpx;
+  right: 4rpx;
+  color: white;
+  border-radius: 50%;
+  font-weight: 400;
+  width: 28rpx;
+  height: 28rpx;
+  text-align: center;
+  line-height: 28rpx;
+}
+.male{
+  background: #2585FB;  
+}
+.female{
+  background: #FF5A5F;  
+}

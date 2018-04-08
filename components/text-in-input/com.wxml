@@ -1,0 +1,3 @@
+<view class="{{value && value.length ? '' : 'empty'}}">
+  {{value ? value : placeholder}}
+</view>

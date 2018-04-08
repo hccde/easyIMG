@@ -1,0 +1,9 @@
+.button {
+  background-color: #4E89E9;
+  color: #ffffff;
+  font-size: 36rpx;
+}
+
+.button-disabled {
+  background-color: rgba(79, 137, 233, 0.4);
+}

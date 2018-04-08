@@ -1,0 +1,9 @@
+<view class="drop-toggle-wrapper {{ open ? 'open' : '' }}" bindtap="onDropClick">
+    <view class="default-text">
+        <slot name="open"></slot>
+    </view>
+    <view class="drop-text">
+        <slot name="close"></slot>
+    </view>
+    <view class="symbol"></view>
+</view>

@@ -1,0 +1,3 @@
+<view class="icon">
+  <i class="iconfont icon-{{name}} {{size}}"/>
+</view>

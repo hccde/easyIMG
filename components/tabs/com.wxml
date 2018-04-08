@@ -1,0 +1,22 @@
+<view class="tabs">
+  <view class="tabs-navs">
+    <view wx:for="{{list}}" wx:key="{{key}}" class="tabs-nav {{index==active ? 'tabs-nav-active': ''}}" data-key="{{index}}" bindtap="toggle">
+      <view class="tabs-nav-inner">{{item}}</view>
+    </view>
+  </view>
+  <pane key="0" active="{{active}}">
+    <block>
+      <slot name="0"></slot>
+    </block>
+  </pane>
+  <pane key="1" active="{{active}}">
+    <block>
+      <slot name="1"></slot>
+    </block>
+  </pane>
+  <pane key="2" active="{{active}}" wx:if="{{list.length >= 3}}">
+    <block>
+      <slot name="2"></slot>
+    </block>
+  </pane>
+</view>

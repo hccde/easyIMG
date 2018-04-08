@@ -1,0 +1,53 @@
+/*!
+ * weui.js v1.1.0 (https://github.com/weui/weui-wxss)
+ * Copyright 2016, wechat ui team
+ * MIT license
+ */
+/* reset */
+page {
+  background-color: #F8F8F8;
+  height: 100%;
+  font-size: 32rpx;
+  line-height: 1.6;
+}
+
+/* page */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 12rpx;
+  box-sizing: border-box;
+  justify-content: space-between;
+  font-size: 32rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+
+.page-body {
+  width: 100%;
+  flex-grow: 1;
+  overflow-x: hidden;
+}
+
+.weui-search-bar__cancel-btn {
+  margin-left: 10px;
+  line-height: 28px;
+  color: #09BB07;
+  white-space: nowrap;
+}
+
+.card{
+  width: 100%;
+  background: #fff;
+  border-radius: 2px;
+  display: block;
+  box-sizing: border-box;
+  padding: 20rpx;
+  box-shadow:0 2px 4px 0 rgba(10,29,61,0.05);
+}
+
+@import "../font-size.wxss";
+@import "../font-color.wxss";
+@import "../margin.wxss";
+@import "../padding.wxss";
+@import "../other.wxss";

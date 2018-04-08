@@ -1,0 +1,7 @@
+<view>
+  <ul class="tags-list">
+    <li wx:for="{{list}}" wx:key="{{index}}">
+      {{item}}
+    </li>
+  </ul>
+</view>

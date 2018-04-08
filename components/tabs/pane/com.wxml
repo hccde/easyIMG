@@ -1,0 +1,3 @@
+<view class="tab-pane {{key==active ? 'tab-pane-active' : ''}}">
+  <slot></slot>
+</view>

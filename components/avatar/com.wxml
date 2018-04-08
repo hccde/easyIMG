@@ -1,0 +1,8 @@
+<view>
+  <view class="avatar">
+    <image src="{{url}}" class="{{size}}"></image>
+    <span wx:if="{{sex != ''}}" class="sex-icon {{sex}}">
+      <Icon name="{{sex}}" size="{{'small'}}" />
+    </span>
+  </view>
+</view>

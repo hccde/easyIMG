@@ -1,0 +1,40 @@
+.drop-toggle-wrapper {
+    position: relative;
+    border-bottom: 1rpx solid #F2F2F5;
+    background: #fff;
+}
+
+.symbol {
+    text-align: center;
+    padding-bottom: 4rpx;
+}
+
+.symbol:after {
+    content: "";
+    display: inline-block;
+    width: 14rpx;
+    height: 14rpx;
+    border-bottom: 1rpx solid gray;
+    border-left: 1rpx solid gray;
+    transform: rotateZ(-45deg);
+}
+
+
+.default-text {
+    display: none;
+}
+
+.drop-toggle-wrapper.open .default-text{
+    display: block;
+}
+
+.drop-toggle-wrapper.open .drop-text{
+    display: none;
+}
+
+.drop-toggle-wrapper.open .symbol:after {
+    transform: rotateZ(135deg);
+}
+
+
+

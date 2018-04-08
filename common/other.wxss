@@ -1,0 +1,35 @@
+.dis-b{
+  display: block;
+}
+
+.fw-b{
+  font-weight: bold;
+}
+
+.fw-l{
+  font-weight: lighter;
+}
+
+.fl{
+  float: left;
+}
+
+.fr{
+  float: right;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.text-right{
+  text-align: right;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.va-m{
+  vertical-align: middle;
+}

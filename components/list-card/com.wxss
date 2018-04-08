@@ -1,0 +1,44 @@
+.list{
+  width: 100%;
+  background: #fff;
+}
+
+.list-item{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30rpx;
+  display: block;
+  border-bottom: 1px #F2F2F5 solid;
+  position: relative;
+}
+
+.arrow-right{
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+  transform: rotate(45deg);
+  float: right;
+  margin-top: -50rpx;
+}
+
+.f12{
+  font-size: 24rpx;
+}
+
+.f14{
+  font-size: 28rpx;
+}
+
+.c0A1D3D{
+  color: #0A1D3D;
+}
+
+.cADB5C1{
+  color: #ADB5C1;
+}
+
+.mt5{
+  margin-top: 10rpx;
+}

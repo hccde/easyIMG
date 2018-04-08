@@ -1,0 +1,19 @@
+<view class="pop-warp">
+  <viwe class="time-warp">
+    <view class="time-title">
+      <view class="time-title-item text-left cADB5C1 f14">取消</view>
+      <view class="time-title-item text-center c495363 f16">时间</view>
+      <view class="time-title-item text-right f14 c4E89E9">确定</view>
+    </view>
+
+    <view class="time-body">
+      <view class="time-body-item text-center">
+        <view class="time-item" wx:for="{{listHour}}">{{item.name}}</view>
+      </view>
+
+      <view class="time-body-item text-center">
+        <view class="time-item" wx:for="{{listMin}}">{{item.name}}</view>
+      </view>
+    </view>
+  </viwe>
+</view>

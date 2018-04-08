@@ -1,0 +1,10 @@
+@import '/assets/font.wxss';
+.small {
+  font-size: 24rpx;
+}
+.large {
+  font-size: 36rpx;
+}
+.middle {
+  font-size: 32rpx
+}
