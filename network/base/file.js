@@ -1,7 +1,8 @@
 const CUSTOMCODE = require('./CUSTOMCODE');
 const extend = require('../../libs/extend');
 import token from './token'
-import server from '../../conf/server'
+// import server from '../../conf/server'
+const server = '';
 
 
 

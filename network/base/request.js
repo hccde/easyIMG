@@ -2,7 +2,8 @@
 const regeneratorRuntime = require('../../libs/regenerator-runtime');
 
 const extend = require('../../libs/extend');
-import server from '../../conf/server'
+// import server from '../../conf/server'
+const server = ''
 import createPubParams from './createPubParams'
 const CUSTOMCODE = require('./CUSTOMCODE');
 import wxapi from '../../libs/wx-api-promise/index'

@@ -45,7 +45,7 @@ Page({
   onLoad: async function () {
     // 校验本地token
     let token = tokenManager.get()
-    init(token)
+    // init(token)
 
     let userinfo;
     if (token) {
@@ -58,6 +58,7 @@ Page({
 
     // 未登录
     if (!userinfo) {
+      return;
       // 获取微信code
       const wxLoginRes = await wxapi.login()
       console.log('wxLoginRes:', wxLoginRes)
