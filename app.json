@@ -1,6 +1,7 @@
 {
   "pages":[
-    "pages/index/page"
+    "pages/index/page",
+    "pages/platform/page"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
