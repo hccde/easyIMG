@@ -1,4 +1,4 @@
 <view>
     <canvas canvas-id="canvas" ></canvas>
-    <image src="/assets/test.jpg" bindload=""></image>
+    <ImageFile id="img" src="/assets/test.jpg"/>
 </view>

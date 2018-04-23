@@ -1,3 +1,0 @@
-<view class="seats">
-  <image wx:for="{{list}}" wx:key="{{index}}" class="seat" src="/assets/icon-seat-{{item}}.png"></image>
-</view>

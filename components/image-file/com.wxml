@@ -1,0 +1,7 @@
+<view class="input-file">
+    <image src="{{src}}"
+        bindload="load"
+        binderror="error"
+    />
+     <canvas canvas-id="img-canvas" ></canvas>
+</view>

@@ -1,3 +1,0 @@
-<picker mode="selector" range="{{range}}" range-key="text" value="selected" bindchange="onChange">
-  <slot></slot>
-</picker>
