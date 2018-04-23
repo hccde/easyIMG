@@ -1,3 +1,4 @@
 <view>
-    platform
+    <canvas canvas-id="canvas" ></canvas>
+    <image src="/assets/test.jpg" bindload=""></image>
 </view>
