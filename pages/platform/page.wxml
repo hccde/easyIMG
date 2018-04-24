@@ -1,4 +1,3 @@
 <view>
     <canvas canvas-id="canvas" ></canvas>
-    <ImageFile id="img" src="/assets/test.jpg"/>
 </view>
