@@ -1,5 +1,5 @@
 {
     "usingComponents":{
-        "ImageFile":"/components/upload/com"
+        "UploadImg":"/components/upload/com"
     }
 }

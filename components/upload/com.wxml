@@ -1,3 +1,5 @@
 <view class="input-file">
-    
+    <view bindtap="upload">
+        <slot></slot>
+    </view>
 </view>

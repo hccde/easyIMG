@@ -1,3 +1,6 @@
 <view>
     <canvas canvas-id="canvas" ></canvas>
+    <UploadImg>
+        上传
+    </UploadImg>
 </view>
