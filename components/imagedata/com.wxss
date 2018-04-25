@@ -1,0 +1,8 @@
+.image-data{
+  position: absolute;
+}
+.image-data canvas {
+  position: absolute;
+  bottom: -9999rpx; 
+}
+/* hidden */

@@ -1,5 +1,6 @@
 {
     "usingComponents":{
-        "UploadImg":"/components/upload/com"
+        "UploadImg":"/components/upload/com",
+        "GetImageData":"/components/imagedata/com"
     }
 }

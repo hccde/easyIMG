@@ -1,26 +1,33 @@
+const regeneratorRuntime = require('../../libs/regenerator-runtime')
+import wxapi from '../../libs/wx-api-promise/index';
+
 Component({
     properties: {
     },
-    
+
     methods: {
-        upload(){
-            wx.chooseImage({
+        async upload() {
+            let res = await wxapi.chooseImage({
                 count: 1,
                 // sizeType: ['original', 'compressed'],
                 sizeType: ['original'],
                 sourceType: ['album', 'camera'],
-                success: function (res) {
-                  let tempFilePaths = res.tempFilePaths;
-                  this.triggerEvent('change',{
-                      url:tempFilePaths[0]
-                  });
-                },
-                fail:function(){
+            });
+            if (res.success) {
+                let tempFilePaths = res.res.tempFilePaths;
+                const r = await wxapi.getImageInfo({
+                    src:tempFilePaths[0]
+                });
+                if(!r.success){
                     wx.toast({
-                        title:"上传失败"
-                    })
+                        title:"获取图片信息失败"
+                    });
+                    return;
                 }
-              })
+                this.triggerEvent('change', {
+                    ...r.res
+                });
+            }
         }
     }
-  })
+})
