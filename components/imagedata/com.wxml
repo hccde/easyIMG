@@ -1,0 +1,6 @@
+<view class="image-data">
+  <canvas canvas-id="imagedata-canvas"
+    binderror = "canvasError"
+    style="width:{{img.width}}rpx;height:{{img.height}}rpx;"
+  ></canvas>
+</view>

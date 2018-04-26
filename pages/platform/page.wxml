@@ -1,7 +1,12 @@
 <view>
     <canvas canvas-id="canvas" ></canvas>
+<<<<<<< HEAD
     <MoveContainer/>
     <UploadImg>
+=======
+    <UploadImg bindchange="uploadImg">
+>>>>>>> f4a4dfe0aa6c42ada190c5ac7b2c5dd06ffaf1db
         上传
     </UploadImg>
+    <GetImageData img="{{img}}" bindchange="getImageData"/>
 </view>

@@ -14,6 +14,8 @@ module.exports = [
   'chooseImage',
   'previewImage',
   'getImageInfo',
+  'canvasGetImageData',
+  'canvasToTempFilePath',
   'saveImageToPhotosAlbum',
 
   // 媒体-录音
