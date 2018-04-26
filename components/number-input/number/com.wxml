@@ -1,3 +1,0 @@
-<view class="number {{focus ? 'number-focus' : ''}}">
-  {{value}}
-</view>

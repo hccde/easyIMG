@@ -1,5 +1,6 @@
 {
     "usingComponents":{
-        "UploadImg":"/components/upload/com"
+        "UploadImg":"/components/upload/com",
+        "MoveContainer":"/components/move-container/com"
     }
 }

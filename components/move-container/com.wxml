@@ -1,0 +1,10 @@
+<view class="move-container">
+    <movable-area style="height:300rpx;width:300rpx">
+        <movable-view
+            style="width:40rpx;height:40rpx;background:red;"
+            x="{{x}}" y="{{y}}" direction="all"
+        >
+            <text>aaa</text>
+        </movable-view >
+    </movable-area>
+</view>

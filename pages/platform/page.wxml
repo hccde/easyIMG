@@ -1,5 +1,6 @@
 <view>
     <canvas canvas-id="canvas" ></canvas>
+    <MoveContainer/>
     <UploadImg>
         上传
     </UploadImg>

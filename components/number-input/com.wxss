@@ -1,9 +1,0 @@
-.number-input {
-  display: flex;
-  justify-content: space-between;
-}
-
-.number-input-input {
-  position: fixed;
-  left: 100%;
-}
