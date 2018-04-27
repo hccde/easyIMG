@@ -12,10 +12,10 @@ Page({
     onReady(){
         this.drawImg('/assets/test.jpg',0,300);
     },
-    drawImg(url,begin=0,size=300){
+    drawImg(url,begin=0,size=600){
         const context = wx.createCanvasContext('canvas');
         context.drawImage(url, begin, begin, size, size)
-        context.drawImage('/assets/test2.jpg', 20, 20, size, size)
+        // context.drawImage('/assets/test2.jpg', 20, 20, size, size)
         context.draw(false,function(){
             // wx.canvasGetImageData({
             //     canvasId: 'canvas',
