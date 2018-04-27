@@ -1,10 +1,19 @@
 <view class="move-container">
     <movable-area style="height:300rpx;width:300rpx">
         <movable-view
-            style="width:40rpx;height:40rpx;background:red;"
-            x="{{x}}" y="{{y}}" direction="all"
+            wx:for="{{items}}"
+            wx:key="{{index}}"
+            style="height:{{item.height}}rpx;width:{{item.width}}rpx;background:red;"
+            data-index="{{index}}"
+            x="{{item.x}}" y="{{item.y}}" direction="all"
+            bindscale="scale"
+            bindchange="move"
+            scale="true"
         >
-            <text>aaa</text>
+        <image wx:if="{{item.path}}" style="height:{{item.height}}rpx;width:{{item.width}}rpx;"/>
+        <canvas wx:else canvas-id="canvas-{{index}}"
+            style="height:{{item.height}}rpx;width:{{item.width}}rpx;"
+        ></canvas>
         </movable-view >
     </movable-area>
 </view>
