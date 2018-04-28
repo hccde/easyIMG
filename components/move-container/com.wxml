@@ -1,5 +1,5 @@
 <view class="move-container">
-    <movable-area style="height:300rpx;width:300rpx">
+    <movable-area style="height:300rpx;width:300rpx" scale-area="true">
         <movable-view
             wx:for="{{items}}"
             wx:key="{{index}}"
@@ -9,10 +9,11 @@
             bindscale="scale"
             bindchange="move"
             scale="true"
+            out-of-bounds="true"
         >
         <image wx:if="{{item.path}}" style="height:{{item.height}}rpx;width:{{item.width}}rpx;"/>
         <canvas wx:else canvas-id="canvas-{{index}}"
-            style="height:{{item.height}}rpx;width:{{item.width}}rpx;"
+            style="width:100%;height:100%"
         ></canvas>
         </movable-view >
     </movable-area>

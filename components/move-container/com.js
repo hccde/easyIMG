@@ -27,9 +27,16 @@ Component({
     },
     methods: {
         scale(e){
-            console.log('scale',e);
+            let index = e.target.dataset.index;
+            let el = this.properties.items[index];
+            let scaleNUm = e.detail.scale;
+            console.log('scale',e);            
         },
         move(e){
+            let index = e.target.dataset.index;
+            let el = this.properties.items[index];
+            el.x =e.detail.x;
+            el.y = e.detail.y;
             console.log('move',e)
         }
     }
