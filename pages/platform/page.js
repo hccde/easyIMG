@@ -3,7 +3,25 @@ import wxapi from '../../libs/wx-api-promise/index';
 
 Page({
     data:{
-        img:{}
+        img:{},
+        container:{
+            path: '/assets/test3.jpg',
+            width: 533,
+            height: 300
+        },
+        items:[{
+            path: '/assets/test.jpg',
+            width: 30,
+            height: 30,
+            x:0,
+            y:0
+        },{
+            path: '/assets/test.jpg',
+            width: 30,
+            height: 30,
+            x:60,
+            y:60
+        }]
     },
     imagedata:'',
     onLoad(){

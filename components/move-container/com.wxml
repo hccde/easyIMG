@@ -1,7 +1,8 @@
 <view class="move-container">
-    <view class="container">
-        <image src="{{container.path}}" ></image>
-        <movable-area scale-area="true" class="move-container">
+    <image src="{{container.path}}" style="width:{{containerWidth}}px;height:{{containerHeight}}px"/>
+    <movable-area scale-area="true"
+        style="width:{{containerWidth}}px;height:{{containerHeight}}px"
+        class="move-area">
         <movable-view
             wx:for="{{items}}"
             wx:key="{{index}}"
@@ -19,5 +20,4 @@
         ></canvas>
         </movable-view >
     </movable-area>
-    </view>
 </view>

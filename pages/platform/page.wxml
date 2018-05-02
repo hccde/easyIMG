@@ -1,6 +1,9 @@
 <view>
     <canvas canvas-id="canvas" ></canvas>
-    <MoveContainer/>
+    <MergeLayer container="{{container}}" items="{{items}}"/>
+    <MoveContainer
+    container="{{container}}"
+    />
     <UploadImg bindchange="uploadImg">
         上传
     </UploadImg>

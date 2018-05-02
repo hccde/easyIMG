@@ -2,6 +2,7 @@
     "usingComponents":{
         "UploadImg":"/components/upload/com",
         "MoveContainer":"/components/move-container/com",
+        "MergeLayer":"/components/merge-layer/com",
         "GetImageData":"/components/imagedata/com"
     }
 }

@@ -1,0 +1,5 @@
+<view class="merge-layer">
+    <canvas canvas-id="canvas-merge"
+        style="width:{{container.width}}px;height:{{container.height}}px">
+    </canvas>
+</view>
