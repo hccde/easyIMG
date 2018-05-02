@@ -3,9 +3,9 @@ Component({
         container: {
            type:Object,
            value:{
-            path: '',
-            width: 0,
-            height: 0
+            path: '/assets/test3.jpg',
+            width: 533*2,
+            height: 300*2
            }
         },
         items:{
