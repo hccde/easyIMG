@@ -13,7 +13,8 @@ Component({
       value:{
         path:'',
         width:'',
-        height:''
+        height:'',
+        base64:"111"
       },
       observer:"imageChange"      
     },
@@ -23,10 +24,19 @@ Component({
     screenWidth:system.screenWidth,
     screenHeight:system.screenHeight,
     width:system.screenWidth-20,
+    scaleNum:1,
+    widthReal:system.screenWidth,
+    heightReal:system.screenHeight,
+    x:-100,
+    y:-100
   },
   methods: {
     imageChange(newval,oldval){
-
+        console.log(newval,22);
+        this.setData({
+            widthReal:newval.width,
+            heightReal:newval.height
+        })
     },
     getContext(){
       if(this.data.context){
@@ -40,23 +50,22 @@ Component({
       }
   },
   move(e){
-    console.log(e.detail.x,e.detail.y);
+    // console.log(e.detail.x,e.detail.y);
     this.setData({
-      x:-e.detail.x,
-      y:-e.detail.y
+      x:e.detail.x-100,
+      y:e.detail.y-100
     })
   },
   scale(e){
-
+    let scaleNum = e.detail.scale
+    this.setData({
+        scaleNum:scaleNum,
+        widthReal:this.properties.image.width*scaleNum,
+        heightReal:this.properties.image.height*scaleNum,
+    })
   }
   },
   ready(){
-    let context = this.data.context;
-    if(!this.data.context){
-      context = this.getContext();
-    }
-    context.fillStyle = 'rgba(0,0,0,0.5)';
-    context.fillRect(0, 0, system.screenWidth*2, system.screenHeight*2);
-    context.draw(this)
+
   }
 })

@@ -1,6 +1,6 @@
 <view style="height:100%;width:100%;overflow:hidden">
     <ClipImage
-    image="{{image}}"
+    image="{{img}}"
     style="width:100%;height:100%;" />
     <!-- <canvas canvas-id="canvas" ></canvas> -->
     <!-- <MergeLayer container="{{container}}" items="{{items}}"/> -->

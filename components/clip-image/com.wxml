@@ -1,10 +1,21 @@
 <view class="clip-image">
   <movable-area class="move-container" scale-area="true" scale-max="2" scale-min="0.5">
-    <movable-view scale="true" width="{{width}}" height="{{height}}">
-      <image src="/assets/test.jpg" style="opacity:0.5"></image>
+    <movable-view scale="true" width="{{image.width}}" height="{{image.height}}" bindscale="scale" 
+    bindchange="move"  
+    direction="all"      
+    >
+      <image src="/assets/test.jpg" class="raw-image" style="width:{{image.width}}px;height:{{image.height}}px" ></image>
     </movable-view>
-    <movable-view direction="all" class="flash-border" bindchange="move">
-      <image src="/assets/test.jpg" mode="top left" style="margin-left:{{x}}px;margin-top:{{y}}px"></image>
+    <movable-view
+    class="flash-border"
+    x="100px"
+    y="100px"
+    >
+    <view 
+      class="choosen"
+      style="background-image:url({{image.base64}});background-position:{{x}}px {{y}}px;background-size:{{widthReal}}px {{heightReal}}px">
+    </view>
     </movable-view>
   </movable-area>
+  background-size:80px 60px;
 </view>
