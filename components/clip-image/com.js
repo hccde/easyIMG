@@ -21,7 +21,8 @@ Component({
   data:{
     context:null,
     screenWidth:system.screenWidth,
-    screenHeight:system.screenHeight
+    screenHeight:system.screenHeight,
+    width:system.screenWidth-20,
   },
   methods: {
     imageChange(newval,oldval){
@@ -40,6 +41,13 @@ Component({
   },
   move(e){
     console.log(e.detail.x,e.detail.y);
+    this.setData({
+      x:-e.detail.x,
+      y:-e.detail.y
+    })
+  },
+  scale(e){
+
   }
   },
   ready(){

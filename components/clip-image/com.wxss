@@ -6,18 +6,21 @@
 .move-container{
   width: 100%;
   height: 100%;
-  background-color: red;
 }
 .move-item{
   background: white;
-  width: 600px;
+  width: 500px;
   height: 200px;
 }
-.mask{
-  left: 0px;
-  position: absolute;
-  top: 0px;
-  width:200%;
-  height:200%;
-  margin-left: -50%;
+
+.flash-border{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border:2px dotted #fff;
+}
+.flash-border image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }

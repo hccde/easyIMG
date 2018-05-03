@@ -35,7 +35,14 @@
 				{
 					"id": -1,
 					"name": "platform",
-					"pathName": "pages/platform/page"
+					"pathName": "pages/platform/page",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "clip",
+					"pathName": "pages/clip/page",
+					"query": ""
 				}
 			]
 		}
