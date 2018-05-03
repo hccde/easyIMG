@@ -1,3 +1,30 @@
 <view class="clip-image">
-
+  <movable-area class="move-container"
+    scale-area="true"
+    scale-max="2"
+    scale-min="0.5"
+    >
+    <movable-view
+      class="move-item"
+      direction="all"
+      scale="true"
+      x="{{x}}"
+      y="{{y}}"
+      width="{{width}}"
+      height="{{height}}"
+      >
+      aaa
+    </movable-view>
+    <movable-view class="mask"
+      direction="all"
+      scale="true"
+      bindchange="move"
+      bindscale="scale"
+      out-of-bounds="true"
+    >
+      <canvas canvas-id="mask-canvas"
+        style="width:200%;height:200%;"
+      ></canvas>   
+    </movable-view>
+  </movable-area>
 </view>

@@ -3,7 +3,11 @@ import wxapi from '../../libs/wx-api-promise/index';
 
 Page({
     data:{
-        img:{},
+        img:{
+            path:'/assets/test3.jpg',
+            width:533,
+            height:300
+        },
         container:{
             path: '/assets/test3.jpg',
             width: 533,
