@@ -28,7 +28,11 @@ Component({
     widthReal:system.screenWidth,
     heightReal:system.screenHeight,
     x:-100,
-    y:-100
+    y:-100,
+    pageX:202,
+    pageY:198,
+    imgx:0,
+    imgy:0,
   },
   methods: {
     imageChange(newval,oldval){
@@ -55,6 +59,18 @@ Component({
       x:e.detail.x-100,
       y:e.detail.y-100
     })
+  },
+  touchMove(e){
+    let x = e.changedTouches[0].pageX - this.data.pageX;
+    let y = e.changedTouches[0].pageY - this.data.pageY;
+    console.log(x,y)
+    this.setData({
+      pageX:e.changedTouches[0].pageX,
+      pageY:e.changedTouches[0].pageY,
+      imgx:this.data.imgx+x,
+      imgy:this.data.imgy+y
+    })
+    // console.log(e.changedTouches[0].pageX,e.changedTouches[0].pageY);
   },
   scale(e){
     let scaleNum = e.detail.scale

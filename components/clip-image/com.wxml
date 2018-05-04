@@ -2,7 +2,9 @@
   <movable-area class="move-container" scale-area="true" scale-max="2" scale-min="0.5">
     <movable-view scale="true" width="{{image.width}}" height="{{image.height}}" bindscale="scale" 
     bindchange="move"  
-    direction="all"      
+    direction="all" 
+    x="{{imgx}}" 
+    y="{{imgy}}"    
     >
       <image src="/assets/test.jpg" class="raw-image" style="width:{{image.width}}px;height:{{image.height}}px" ></image>
     </movable-view>
@@ -13,6 +15,7 @@
     >
     <view 
       class="choosen"
+      bindtouchmove="touchMove"
       style="background-image:url({{image.base64}});background-position:{{x}}px {{y}}px;background-size:{{widthReal}}px {{heightReal}}px">
     </view>
     </movable-view>
