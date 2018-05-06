@@ -5,6 +5,10 @@
 import regeneratorRuntime from "../../libs/regenerator-runtime";
 import { system } from "../../utils/index";
 import wxapi from '../../libs/wx-api-promise/index';
+const position = {
+    x:-100,
+    y:-100
+};
 
 Component({
   properties: {
@@ -27,8 +31,8 @@ Component({
     scaleNum:1,
     widthReal:system.screenWidth,
     heightReal:system.screenHeight,
-    x:-100,
-    y:-100,
+    x: position.x,
+    y: position.y,
     pageX:202,
     pageY:198,
     imgx:0,
@@ -56,8 +60,8 @@ Component({
   move(e){
     // console.log(e.detail.x,e.detail.y);
     this.setData({
-      x:e.detail.x-100,
-      y:e.detail.y-100
+      x:e.detail.x+position.x,
+      y:e.detail.y+position.y
     })
   },
   touchMove(e){
