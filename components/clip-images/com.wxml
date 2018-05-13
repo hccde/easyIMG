@@ -1,7 +1,7 @@
 <view style="width:100%;height:100%">
     <movable-area class="move-container" scale-area="true" scale-max="2" scale-min="0.5">
     <movable-view class="bottom-image">    
-       <canvas canvas-id="bottom-image"></canvas>
+       <canvas canvas-id="bottom-image" width="100%" height="100%" class="bottom-image-canvas" ></canvas>
     </movable-view>
     <movable-view scale="true" width="{{image.width}}" height="{{image.height}}" bindscale="scale" 
     bindchange="move"  
@@ -10,6 +10,6 @@
     >
     react hello
     </movable-view>
-    <image src="/assets/test.jpg" class="raw-image" style="width:100%;height:100%" ></image> 
+
   </movable-area>
 </view>

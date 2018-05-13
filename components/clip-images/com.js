@@ -16,14 +16,15 @@ Component({
   methods: {
     containerChange(){
         console.log(1)
+        this.drawImage();
     },
     drawImage() {
         let info = this.properties.img;
         if (!info.path) {
           return;
         }
-        info.width = info.width*2 //rpx;
-        info.height = info.height*2
+        info.width = info.width //rpx;
+        info.height = info.height
         if(!this.ctx){
           let context = wx.createCanvasContext('bottom-image', this);
           this.ctx = context
@@ -31,6 +32,7 @@ Component({
         this.ctx.drawImage(info.path, 0, 0, info.width, info.height);
         let that = this;
         this.ctx.draw(false, function(){ //wx bug attetion
+            console.log(222)
           wx.canvasGetImageData({
             x: 0,
             y: 0,

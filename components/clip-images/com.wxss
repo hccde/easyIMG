@@ -1,4 +1,4 @@
-.move-container{
+.move-container,.bottom-image, .bottom-image-canvas{
     width: 100%;
     height: 100%;
 }
