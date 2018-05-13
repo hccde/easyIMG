@@ -4,6 +4,6 @@
         "MoveContainer":"/components/move-container/com",
         "MergeLayer":"/components/merge-layer/com",
         "GetImageData":"/components/imagedata/com",
-        "ClipImage":"/components/clip-image/com"
+        "ClipImages":"/components/clip-images/com"
     }
 }
