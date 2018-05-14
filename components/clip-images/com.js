@@ -4,6 +4,7 @@
 //overflow:hidden
 import regeneratorRuntime from "../../libs/regenerator-runtime";
 import { system } from "../../utils/index";
+let imagedata = {}
 Component({
   properties: {
     img:{
@@ -13,7 +14,22 @@ Component({
   },
   data:{
   },
+  ctx:null,
   methods: {
+    move(event){
+      let x = event.detail.x;
+      let y = event.detail.y;
+      for(let i = 0;i<40;i++ ){
+        for(let j = 0;j<40;j++){
+          // console.log(x+j*4+i*4*imagedata.width + 3)
+          imagedata.data[x*4+j*4+(i+y)*4*imagedata.width + 3] = 255;
+        }
+      }
+      wx.canvasPutImageData({
+          canvasId: 'bottom-image',
+          ...imagedata
+      },this)
+    },
     containerChange(){
         console.log(1)
         this.drawImage();
@@ -38,12 +54,8 @@ Component({
             y: 0,
             width: info.width,
             height:info.height,
-            canvasId: 'imagedata-canvas',
+            canvasId: 'bottom-image',
             success:function(res){
-              that.triggerEvent('change',{
-                ...res,
-                path:that.properties.img.path
-              })
             },
             fail:function(err){
               console.log(err)

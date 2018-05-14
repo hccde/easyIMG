@@ -1,5 +1,5 @@
 <view style="width:100%;height:100%">
-    <movable-area class="move-container" scale-area="true" scale-max="2" scale-min="0.5">
+    <movable-area class="move-container" scale-area="true" scale-max="2" scale-min="0.5" friction="10" >
     <movable-view class="bottom-image">    
        <canvas canvas-id="bottom-image" width="100%" height="100%" class="bottom-image-canvas" ></canvas>
     </movable-view>
