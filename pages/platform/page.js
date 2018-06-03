@@ -1,6 +1,7 @@
 const regeneratorRuntime = require('../../libs/regenerator-runtime')
 import wxapi from '../../libs/wx-api-promise/index';
-
+let width =  350;
+let height = 370;
 Page({
     data:{
         img:{
@@ -8,6 +9,14 @@ Page({
             width:533,
             height:300,
         },
+        width:width,
+        height:height,
+        cut:{
+            x: (width - 200) / 2, // 裁剪框x轴起点
+            y: (width - 200) / 2, // 裁剪框y轴期起点
+            width: width, // 裁剪框宽度
+            height: height // 裁剪框高度
+          },
         container:{
             path: '/assets/test3.jpg',
             width: 533,

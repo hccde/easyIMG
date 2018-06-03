@@ -1,14 +1,9 @@
 <view style="width:100%;height:100%">
-    <movable-area class="move-container" scale-area="true" scale-max="2" scale-min="0.5" friction="10" >
-    <movable-view scale="true" bindscale="scale"
-    class="bottom-image"
-    bindchange="move"  
-    direction="all"    
-    >
-    <image src="{{img.path}}" style="opacity:0.5"></image>
-    </movable-view>
-    <movable-view style="width:50px;height:50px" bindchange="move"  direction="all">   
-       <canvas canvas-id="bottom-image" style="width:50px;height:50px"></canvas>
+  <movable-area class="move-container" scale-area="true" scale-max="2" scale-min="0.5" friction="10">
+    <movable-view scale="true" bindscale="scale" capture-catch:change="move" >
+      <view bindtap="testtap">aaa</view>
+      <Mask></Mask>    
+      
     </movable-view>
   </movable-area>
 </view>

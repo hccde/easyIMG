@@ -3,7 +3,6 @@
         "UploadImg":"/components/upload/com",
         "MoveContainer":"/components/move-container/com",
         "MergeLayer":"/components/merge-layer/com",
-        "GetImageData":"/components/imagedata/com",
-        "ClipImages":"/components/clip-images/com"
+        "Cropper": "/components/cropper/com"
     }
 }

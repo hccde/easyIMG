@@ -19,7 +19,17 @@ Component({
     move(event){
       let x = event.detail.x;
       let y = event.detail.y;
-      
+      console.log(event,33)
+    },
+    testtap(){
+      console.log(222);
+    },
+    ptest(e){
+      console.log(e,33)
+    },
+    testmove(e){
+      console.log(22);
+      this.triggerEvent('test', e, { bubbles: true,               composed: true })
     },
     containerChange(){
         console.log(1)

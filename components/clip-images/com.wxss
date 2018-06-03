@@ -1,9 +1,16 @@
-.move-container,.bottom-image, .bottom-image-canvas{
+.move-container{
     width: 100%;
-    height: 100%;
+    height: 100%; 
+    position: relative;       
 }
-.mask{
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
+.bottom-image{
+}
+.bottom-image {
+  position: fixed;
+  z-index: 2;
+  left: 0rpx;
+  /* width: 375px;
+  height: 667px; */
+  display: block;
+  top: 0rpx;
 }

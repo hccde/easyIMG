@@ -1,7 +1,8 @@
 {
   "pages":[
     "pages/index/page",
-    "pages/platform/page"
+    "pages/platform/page",
+    "pages/cropper/page"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",

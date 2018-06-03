@@ -1,0 +1,9 @@
+.move-container{
+    width: 100%;
+    height: 100%; 
+    position: relative;       
+}
+.move-view{
+  height:300px;
+  width:300px; 
+}
