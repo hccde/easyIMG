@@ -1,0 +1,21 @@
+page {
+    position: relative;
+    padding: 0rpx;
+    margin: 0rpx;
+}
+.cropper-buttons{
+    position: absolute;
+    top: 0rpx;
+    left: 0rpx;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.cropper-buttons view{
+    width: 100rpx;
+    margin-top: 20rpx;
+    text-align: center;
+}
+.getCropperImage{
+    color: red
+}

@@ -1,5 +1,4 @@
 <view>
-  hello
   <canvas 
   class="cropper" 
   disable-scroll="true" 
@@ -12,12 +11,12 @@
         <view
                 class="upload"
                 bindtap="uploadTap">
-            上传图片
+            取消
         </view>
         <view
                 class="getCropperImage"
                 bindtap="getCropperImage">
-            生成图片
+            完成
         </view>
     </view>
 </view>

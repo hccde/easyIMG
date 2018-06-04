@@ -185,7 +185,7 @@ function prepare () {
   self.createCtx = function () {
     var id = self.id;
     if (id) {
-      self.ctx = wx.createCanvasContext(id,this);
+      self.ctx = wx.createCanvasContext(id);
     } else {
       console.error("constructor: create canvas context failed, 'id' must be valuable");
     }
@@ -613,14 +613,12 @@ function methods () {
   self.updateCanvas = function () {
     if (self.croperTarget) {
       //  画布绘制图片
-      self.ctx.drawImage(self.croperTarget, self.imgLeft, self.imgTop, self.scaleWidth, self.scaleHeight,self);
+      self.ctx.drawImage(self.croperTarget, self.imgLeft, self.imgTop, self.scaleWidth, self.scaleHeight);
     }
     isFunction(self.onBeforeDraw) && self.onBeforeDraw(self.ctx, self);
 
     self.setBoundStyle(); //	设置边界样式
-    self.ctx.draw(true,function(err){
-      console.log(err,44)
-    },this);
+    self.ctx.draw();
     return self
   };
 
@@ -899,6 +897,7 @@ function cut () {
 	 * @param color	边界颜色
 	 */
   self.setBoundStyle = function (ref) {
+    console.log(222)
     if ( ref === void 0 ) ref = {};
     var color = ref.color; if ( color === void 0 ) color = '#04b00f';
     var mask = ref.mask; if ( mask === void 0 ) mask = 'rgba(0, 0, 0, 0.3)';
@@ -968,6 +967,8 @@ var weCropper = function weCropper (params) {
   self.cutt();
   self.methods();
   self.init();
+  self.setBoundStyle(); //	设置边界样式
+    self.ctx.draw();
   self.update();
 
   return self
@@ -988,7 +989,6 @@ weCropper.prototype.init = function init () {
 
   self.oldScale = 1;
   self.newScale = 1;
-
   return self
 };
 
