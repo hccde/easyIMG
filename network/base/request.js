@@ -3,7 +3,8 @@ const regeneratorRuntime = require('../../libs/regenerator-runtime');
 
 const extend = require('../../libs/extend');
 // import server from '../../conf/server'
-const server = ''
+const server = 'http://localhost:4000' //dev
+
 import createPubParams from './createPubParams'
 const CUSTOMCODE = require('./CUSTOMCODE');
 import wxapi from '../../libs/wx-api-promise/index'
@@ -30,6 +31,7 @@ export default async ({url, method, params, headers}) => {
       method: method
     }).then(function (res) {
       if (({}).toString.call(res.res.data) === '[object Object]') {
+        console.log(111,res.res.data)
         resolve(res.res.data);
       }
       else {

@@ -9,7 +9,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.94",
-	"appid": "wxf1abdf58ca15872a",
+	"appid": "wx7fc36dbb71f22494",
 	"projectname": "esayimg",
 	"isGameTourist": false,
 	"condition": {
@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -47,7 +47,20 @@
 				{
 					"id": -1,
 					"name": "cropper",
-					"pathName": "pages/cropper/page"
+					"pathName": "pages/cropper/page",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "auth",
+					"pathName": "pages/authorization/page",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/page",
+					"query": ""
 				}
 			]
 		}

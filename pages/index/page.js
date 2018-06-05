@@ -10,7 +10,9 @@ import openIDManager from '../../global/openID'
 const isProfileComplete = (userinfo) => userinfo && userinfo.avatarUrl && userinfo.gender && userinfo.nickName
 
 const getWXUserInfo =  () => new Promise(async (resolve) => {
+  //去授权页 带按钮
   const wxUserinfoRes = await wxapi.getUserInfo()
+  console.log(11)
   console.log('wxUserinfoRes:', wxUserinfoRes)
   const wxUserinfo = wxUserinfoRes.success ? wxUserinfoRes.res.userInfo : null
   wxUserinfoManager.set(wxUserinfo)
@@ -20,14 +22,12 @@ const getWXUserInfo =  () => new Promise(async (resolve) => {
 
 Page({
   onLoad: async function () {
-    return; //todo
     // 校验本地token
     let token = tokenManager.get()
-    // init(token)
 
     let userinfo;
     if (token) {
-      const userinfoRes = await account.getCustomerInfo()
+      const userinfoRes = await account.getCustomerInfo();//backend userdata
       if (userinfoRes.respCode === 0) {
         // 个人信息已经完善
         userinfo = userinfoRes.content

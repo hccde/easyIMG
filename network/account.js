@@ -8,12 +8,6 @@ api.login = (params) => request({
   params: params
 })
 
-api.verifyPhone = (params) => request({
-  url: '/usercenter/verifyPhone',
-  method: 'POST',
-  params: params
-})
-
 api.getCustomerInfo = () => request({
   url: '/usercenter/getCustomerInfo',
   method: 'POST'

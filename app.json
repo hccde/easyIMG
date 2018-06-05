@@ -2,7 +2,8 @@
   "pages":[
     "pages/index/page",
     "pages/platform/page",
-    "pages/cropper/page"
+    "pages/cropper/page",
+    "pages/authorization/page"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
