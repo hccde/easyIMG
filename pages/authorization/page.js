@@ -10,6 +10,7 @@ Page({
   },
   onLoad: async function (opt) {
       this.data.sessionKey = opt.sessionKey;
+      
   },
   async getUserInfo(e){
     const opt = e.detail;
