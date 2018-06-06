@@ -9,16 +9,6 @@ import openIDManager from '../../global/openID'
 
 const isProfileComplete = (userinfo) => userinfo && userinfo.avatarUrl && userinfo.gender && userinfo.nickName
 
-const getWXUserInfo =  () => new Promise(async (resolve) => {
-  //去授权页 带按钮
-  const wxUserinfoRes = await wxapi.getUserInfo()
-  console.log(11)
-  console.log('wxUserinfoRes:', wxUserinfoRes)
-  const wxUserinfo = wxUserinfoRes.success ? wxUserinfoRes.res.userInfo : null
-  wxUserinfoManager.set(wxUserinfo)
-  resolve(wxUserinfo)
-})
-
 
 Page({
   onLoad: async function () {
@@ -28,7 +18,7 @@ Page({
     let userinfo;
     if (token) {
       const userinfoRes = await account.getCustomerInfo();//backend userdata
-      if (userinfoRes.respCode === 0) {
+      if (userinfoRes.content) {
         // 个人信息已经完善
         userinfo = userinfoRes.content
       }
@@ -58,10 +48,11 @@ Page({
       token = loginRes.content.jwtToken
         if (!token) {
             // 该微信用户之前未绑定opneid-userid
-            const openID = loginRes.content.openId
-            openIDManager.set(openID)
-
-            await getWXUserInfo()
+            // const openID = loginRes.content.openId
+            // openIDManager.set(openID)
+          wx.navigateTo({
+            url:`/pages/authorization/page?sessionKey=${loginRes.content['sessionKey']}`
+          });
         } else {
             // 登录成功, 该微信用户之前已绑定openid-userid
             tokenManager.set(token)

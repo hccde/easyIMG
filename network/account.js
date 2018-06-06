@@ -8,11 +8,17 @@ api.login = (params) => request({
   params: params
 })
 
-api.getCustomerInfo = () => request({
+api.getCustomerInfo = (params) => request({
   url: '/usercenter/getCustomerInfo',
-  method: 'POST'
+  method: 'POST',
+  params:params
 })
 
+api.addCustomerInfo = (params) => request({
+  url: '/usercenter/addCustomerInfo',
+  method: 'POST',
+  params:params
+})
 
 
 
