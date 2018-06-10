@@ -1,4 +1,6 @@
-<view>
-    test
-    <canvas canvas-id="canvas"></canvas>
+<view> 
+  <Stage
+  width="{{300}}"
+  height="{{500}}"
+  bindready="stageReady"></Stage>
 </view>
