@@ -13,12 +13,18 @@ Page({
     gifimage:'',
   },
   async stageReady({detail}){
-    let {ctx,draw} = detail; 
-    ctx.drawImage('https://www.baidu.com/img/bd_logo1.png?where=super',0,0,300,500);
+    let { ctx, draw, that} = detail; 
+    ctx.drawImage('https://www.baidu.com/img/bd_logo1.png?where=super',0,0,400,500);
+    let arr = new Array(1000).fill(1).map(()=>{
+      return {
+        type:'text',
+        content:'test me',
+        speed:12
+      }
+    });
+    that.bulletText(arr,that);
+
     await draw(false,false)
-    ctx.drawImage('https://www.baidu.com/img/bd_logo1.png?where=super', 200, 100, 300, 500);
-    let out = await draw(false, true);
-    console.log(out.content.image)
   },
   onShow:function(){
     //todo

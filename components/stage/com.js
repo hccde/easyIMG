@@ -18,6 +18,7 @@ Component({
       const that = this;
       this.triggerEvent('ready', {
         ctx: this.ctx,
+        that:this,
         draw: this.draw.bind(this)
       })
     },
@@ -101,6 +102,22 @@ Component({
 
       })
     },
+    //arr bullettext array
+    //opt bullettext set
+    bulletText(arr,that,opt){
+      let timeline = 0; //用二维数组做 每一个数组代表一个时间点 数组的数据个数随机 y值随机排布 x值取决于前面同等高度的弹幕的长度 x,y
+      // let textArr = arr.map((e,index)=>{
+      //     e.timeline = timeline;
+      //     e.y = that.properties.height * Math.random();
+      //     e.x = timeline * e.speed; //间距
+      //     // e.x = e.content.length*Math.random()*12+timeline*12*3 //speed
+      //     if(Math.random()*100 > 40){ //时间点弹幕
+      //       timeline += 1;
+      //     }
+      //     return e;
+      // });
+      // console.log(textArr,33)
+    }
   },
   attached() {
     this.initCanvas();
