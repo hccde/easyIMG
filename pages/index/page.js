@@ -14,17 +14,15 @@ Page({
   },
   async stageReady({detail}){
     let { ctx, draw, that} = detail; 
-    ctx.drawImage('https://www.baidu.com/img/bd_logo1.png?where=super',0,0,400,500);
-    let arr = new Array(1000).fill(1).map(()=>{
+    let arr = new Array(100).fill(1).map(()=>{
       return {
         type:'text',
         content:'test me',
-        speed:12
       }
     });
     that.bulletText(arr,that);
 
-    await draw(false,false)
+    // await draw(true,false)
   },
   onShow:function(){
     //todo

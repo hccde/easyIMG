@@ -142,7 +142,7 @@ let GIFEncoder = function() {
 	 */
 
 	var addFrame = exports.addFrame = function addFrame(im, is_imageData) {
-    console.log(im,44)
+    // console.log(im,44)
 		if ((im === null) || !started || out === null) {
 			throw new Error("Please call start method before calling addFrame");
 		}
@@ -151,7 +151,6 @@ let GIFEncoder = function() {
 
 		try {
 				if(im) {
-          console.log('imagedata')
 					image = im.data;
 					if(!sizeSet || width!=im.width || height!=im.height) {
 						setSize(im.width,im.height);
@@ -159,7 +158,6 @@ let GIFEncoder = function() {
 						console.log('err')
 					}
 				} else if(im instanceof Uint8ClampedArray) {
-          console.log(2222)
 					if(im.length==(width*height*4)) {
 						image=im;
 					} else {
@@ -349,7 +347,7 @@ let GIFEncoder = function() {
 		var nq = new NeuQuant(pixels, len, sample);
 
     // initialize quantizer
-    console.log(nq,666)
+    // console.log(nq,666)
 		colorTab = nq.process(); // create reduced palette
 
 		// map image pixels to new palette
