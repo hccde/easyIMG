@@ -6,6 +6,7 @@ import wxUserinfoManager from '../../global/wxUserinfo'
 import tokenManager from '../../global/token'
 import openIDManager from '../../global/openID'
 const isProfileComplete = (userinfo) => userinfo && userinfo.avatarUrl && userinfo.gender && userinfo.nickName
+import WordCloud from  '../../libs/canvas/wordcloud';
 
 
 Page({
@@ -26,6 +27,8 @@ Page({
   },
   onShow:function(){
     //todo
+    console.log(WordCloud,33);
+    
   },
   onLoad: async function () {
     // 校验本地token
