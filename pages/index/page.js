@@ -12,6 +12,8 @@ import WordCloud from  '../../libs/canvas/wordcloud';
 Page({
   data:{
     gifimage:'',
+    canvasWidth:300,
+    canvasHeight:500
   },
   async stageReady({detail}){
     let { ctx, draw, that} = detail; 
@@ -27,8 +29,18 @@ Page({
   },
   onShow:function(){
     //todo
+    var wxctx = wx.createCanvasContext('mycanvas')
     console.log(WordCloud,33);
-    
+    wxctx.setFillStyle('red')
+    wxctx.fillRect(0, 0, this.data.canvasWidth, this.data.canvasHeight)
+    WordCloud(wxctx,{
+      list:new Array(10).fill(['foo', 20]),
+      gridSize: Math.round(16 * this.data.canvasWidth / 1024),
+      shape:'square',
+      shuffle:true
+      // [['foo', 20], ['bar', 20],['foo', 20], ['bar', 20],['foo', 20], ['bar', 20],['foo', 20], ['bar', 20]].repeat(100)
+    },this.data.canvasWidth,this.data.canvasHeight,'mycanvas',this)
+
   },
   onLoad: async function () {
     // 校验本地token

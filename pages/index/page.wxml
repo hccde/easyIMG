@@ -1,2 +1,3 @@
 <view> 
+  <canvas canvas-id="mycanvas" style="width:{{canvasWidth}}px;height:{{canvasHeight}}px;"></canvas>
 </view>

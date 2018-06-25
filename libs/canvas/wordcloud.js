@@ -8,7 +8,7 @@
 
 'use strict';
 
-
+const regeneratorRuntime = require('../regenerator-runtime')
 
   // Check if WordCloud can run on this browser
   var isSupported = true;
@@ -26,25 +26,11 @@
     return arr;
   };
 
-  var WordCloud = function WordCloud(elements, options) {
+  var WordCloud = function WordCloud(wxctx, options,canvasWidth,canvasHeight,canvasId,that) { //入参改为微信的canvas ctx
     if (!isSupported) {
       return;
     }
 
-    if (!Array.isArray(elements)) {
-      elements = [elements];
-    }
-
-    elements.forEach(function(el, i) {
-      if (typeof el === 'string') {
-        elements[i] = document.getElementById(el);
-        if (!elements[i]) {
-          throw 'The element id specified is not found.';
-        }
-      } else if (!el.tagName && !el.appendChild) {
-        throw 'You must pass valid HTML elements, or ID of the element.';
-      }
-    });
 
     /* Default values to be overwritten by options object */
     var settings = {
@@ -66,7 +52,7 @@
       maskColor: 'rgba(255,0,0,0.3)',
       maskGapWidth: 0.3,
 
-      wait: 0,
+      wait: 1, //wait time 改为1 走setTimeout 的逻辑
       abortThreshold: 0, // disabled
       abort: function noop() {},
 
@@ -218,10 +204,10 @@
     /* function for getting the color of the text */
     var getTextColor;
     function random_hsl_color(min, max) {
-      return 'hsl(' +
-        (Math.random() * 360).toFixed() + ',' +
-        (Math.random() * 30 + 70).toFixed() + '%,' +
-        (Math.random() * (max - min) + min).toFixed() + '%)';
+      return 'rgb(' +
+        (Math.random() * 255).toFixed() + ',' +
+        (Math.random() * 255).toFixed() + ',' +
+        (Math.random() * 255).toFixed() + ')';
     }
     switch (settings.color) {
       case 'random-dark':
@@ -260,56 +246,57 @@
     var infoGrid = [];
     var hovered;
 
-    var getInfoGridFromMouseTouchEvent =
-    function getInfoGridFromMouseTouchEvent(evt) {
-      var canvas = evt.currentTarget;
-      var rect = canvas.getBoundingClientRect();
-      var clientX;
-      var clientY;
-      /** Detect if touches are available */
-      if (evt.touches) {
-        clientX = evt.touches[0].clientX;
-        clientY = evt.touches[0].clientY;
-      } else {
-        clientX = evt.clientX;
-        clientY = evt.clientY;
-      }
-      var eventX = clientX - rect.left;
-      var eventY = clientY - rect.top;
+    //不需要交互
+    // var getInfoGridFromMouseTouchEvent =
+    // function getInfoGridFromMouseTouchEvent(evt) {
+    //   var canvas = evt.currentTarget;
+    //   var rect = canvas.getBoundingClientRect();
+    //   var clientX;
+    //   var clientY;
+    //   /** Detect if touches are available */
+    //   if (evt.touches) {
+    //     clientX = evt.touches[0].clientX;
+    //     clientY = evt.touches[0].clientY;
+    //   } else {
+    //     clientX = evt.clientX;
+    //     clientY = evt.clientY;
+    //   }
+    //   var eventX = clientX - rect.left;
+    //   var eventY = clientY - rect.top;
 
-      var x = Math.floor(eventX * ((canvas.width / rect.width) || 1) / g);
-      var y = Math.floor(eventY * ((canvas.height / rect.height) || 1) / g);
+    //   var x = Math.floor(eventX * ((canvas.width / rect.width) || 1) / g);
+    //   var y = Math.floor(eventY * ((canvas.height / rect.height) || 1) / g);
 
-      return infoGrid[x][y];
-    };
+    //   return infoGrid[x][y];
+    // };
 
-    var wordcloudhover = function wordcloudhover(evt) {
-      var info = getInfoGridFromMouseTouchEvent(evt);
+    // var wordcloudhover = function wordcloudhover(evt) {
+    //   var info = getInfoGridFromMouseTouchEvent(evt);
 
-      if (hovered === info) {
-        return;
-      }
+    //   if (hovered === info) {
+    //     return;
+    //   }
 
-      hovered = info;
-      if (!info) {
-        settings.hover(undefined, undefined, evt);
+    //   hovered = info;
+    //   if (!info) {
+    //     settings.hover(undefined, undefined, evt);
 
-        return;
-      }
+    //     return;
+    //   }
 
-      settings.hover(info.item, info.dimension, evt);
+    //   settings.hover(info.item, info.dimension, evt);
 
-    };
+    // };
 
-    var wordcloudclick = function wordcloudclick(evt) {
-      var info = getInfoGridFromMouseTouchEvent(evt);
-      if (!info) {
-        return;
-      }
+    // var wordcloudclick = function wordcloudclick(evt) {
+    //   var info = getInfoGridFromMouseTouchEvent(evt);
+    //   if (!info) {
+    //     return;
+    //   }
 
-      settings.click(info.item, info.dimension, evt);
-      evt.preventDefault();
-    };
+    //   settings.click(info.item, info.dimension, evt);
+    //   evt.preventDefault();
+    // };
 
     /* Get points on the grid for a given radius away from the center */
     var pointsAtRadius = [];
@@ -379,7 +366,8 @@
       }
     };
 
-    var getTextInfo = function getTextInfo(word, weight, rotateDeg) {
+    var mu = 1; //todo 
+    var getTextInfo = async function getTextInfo(word, weight, rotateDeg) { //改为async函数
       // calculate the acutal font size
       // fontSize === 0 means weightFactor function wants the text skipped,
       // and size < minSize means we cannot draw the text.
@@ -392,7 +380,7 @@
       // Scale factor here is to make sure fillText is not limited by
       // the minium font size set by browser.
       // It will always be 1 or 2n.
-      var mu = 1;
+      // var mu = 1;
       if (fontSize < minFontSize) {
         mu = (function calculateScaleFactor() {
           var mu = 2;
@@ -411,17 +399,17 @@
         fontWeight = settings.fontWeight;
       }
 
-      var fcanvas = document.createElement('canvas');
-      var fctx = fcanvas.getContext('2d', { willReadFrequently: true });
+      // var fcanvas = document.createElement('canvas');
+      // var fctx = fcanvas.getContext('2d', { willReadFrequently: true });
 
-      fctx.font = fontWeight + ' ' +
+      wxctx.font = fontWeight + ' ' +
         (fontSize * mu).toString(10) + 'px ' + settings.fontFamily;
 
       // Estimate the dimension of the text with measureText().
-      var fw = fctx.measureText(word).width / mu;
+      var fw = wxctx.measureText(word).width / mu;
       var fh = Math.max(fontSize * mu,
-                        fctx.measureText('m').width,
-                        fctx.measureText('\uFF37').width) / mu;
+                        wxctx.measureText('m').width,
+                        wxctx.measureText('\uFF37').width) / mu;
 
       // Create a boundary box that is larger than our estimates,
       // so text don't get cut of (it sill might)
@@ -450,50 +438,76 @@
       var width = cgw * g;
       var height = cgh * g;
 
-      fcanvas.setAttribute('width', width);
-      fcanvas.setAttribute('height', height);
+        //这里可能有bug
+      // fcanvas.setAttribute('width', width);
+      // fcanvas.setAttribute('height', height);
 
-      if (debug) {
-        // Attach fcanvas to the DOM
-        document.body.appendChild(fcanvas);
-        // Save it's state so that we could restore and draw the grid correctly.
-        fctx.save();
-      }
+      // if (debug) {
+      //   // Attach fcanvas to the DOM
+      //   // document.body.appendChild(fcanvas);
+      //   // Save it's state so that we could restore and draw the grid correctly.
+      //   fctx.save();
+      // }
 
       // Scale the canvas with |mu|.
-      fctx.scale(1 / mu, 1 / mu);
-      fctx.translate(width * mu / 2, height * mu / 2);
-      fctx.rotate(- rotateDeg);
+      wxctx.scale(1 / mu, 1 / mu);
+      wxctx.translate(width * mu / 2, height * mu / 2); //todo
+      wxctx.rotate(- rotateDeg);
 
       // Once the width/height is set, ctx info will be reset.
       // Set it again here.
-      fctx.font = fontWeight + ' ' +
+      var wxctxfont = fontWeight + ' ' +
         (fontSize * mu).toString(10) + 'px ' + settings.fontFamily;
-
+      wxctx.setFontSize(wxctxfont);
       // Fill the text into the fcanvas.
       // XXX: We cannot because textBaseline = 'top' here because
       // Firefox and Chrome uses different default line-height for canvas.
       // Please read https://bugzil.la/737852#c6.
       // Here, we use textBaseline = 'middle' and draw the text at exactly
       // 0.5 * fontSize lower.
-      fctx.fillStyle = '#000';
-      fctx.textBaseline = 'middle';
-      fctx.fillText(word, fillTextOffsetX * mu,
-                    (fillTextOffsetY + fontSize * 0.5) * mu);
-
+      // wxctx.fillStyle = '#000';
+      // wxctx.textBaseline = 'middle';
+      // wxctx.fillText(word, fillTextOffsetX * mu,
+      //               (fillTextOffsetY + fontSize * 0.5) * mu);
       // Get the pixels of the text
-      var imageData = fctx.getImageData(0, 0, width, height).data;
+      // wxctx.draw(true)
+      // console.log(fillTextOffsetX * mu,(fillTextOffsetY + fontSize * 0.5) * mu,77)
+      await new Promise(function(reslove,reject){
+        wxctx.draw(true,function(){
+          reslove(true)
+        })
+      })
+      var imageData = await new Promise(function(reslove,reject){
+        wx.canvasGetImageData({
+          canvasId: canvasId,
+          x: 0,
+          y: 0,
+          width: canvasWidth,
+          height: canvasHeight,
+          success(res) {
+            reslove(res.data); //imagedata
+          },
+          fail(err){
+            reject({
+              msg:'获取像素失败',
+              err:err
+            });
+          }
+        },that)
+      })
+      // var imageData = wxctx.getImageData(0, 0, width, height).data; //todo
 
-      if (exceedTime()) {
-        return false;
-      }
 
-      if (debug) {
-        // Draw the box of the original estimation
-        fctx.strokeRect(fillTextOffsetX * mu,
-                        fillTextOffsetY, fw * mu, fh * mu);
-        fctx.restore();
-      }
+      // if (exceedTime()) {
+      //   return false;
+      // }
+
+      // if (debug) {
+      //   // Draw the box of the original estimation
+      //   fctx.strokeRect(fillTextOffsetX * mu,
+      //                   fillTextOffsetY, fw * mu, fh * mu);
+      //   fctx.restore();
+      // }
 
       // Read the pixels and save the information to the occupied array
       var occupied = [];
@@ -524,29 +538,29 @@
                     bounds[2] = gy;
                   }
 
-                  if (debug) {
-                    fctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-                    fctx.fillRect(gx * g, gy * g, g - 0.5, g - 0.5);
-                  }
+                  // if (debug) {
+                  //   fctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                  //   fctx.fillRect(gx * g, gy * g, g - 0.5, g - 0.5);
+                  // }
                   break singleGridLoop;
                 }
               }
             }
-            if (debug) {
-              fctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
-              fctx.fillRect(gx * g, gy * g, g - 0.5, g - 0.5);
-            }
+            // if (debug) {
+            //   fctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+            //   fctx.fillRect(gx * g, gy * g, g - 0.5, g - 0.5);
+            // }
           }
         }
       }
 
-      if (debug) {
-        fctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
-        fctx.fillRect(bounds[3] * g,
-                      bounds[0] * g,
-                      (bounds[1] - bounds[3] + 1) * g,
-                      (bounds[2] - bounds[0] + 1) * g);
-      }
+      // if (debug) {
+      //   fctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+      //   fctx.fillRect(bounds[3] * g,
+      //                 bounds[0] * g,
+      //                 (bounds[1] - bounds[3] + 1) * g,
+      //                 (bounds[2] - bounds[0] + 1) * g);
+      // }
 
       // Return information needed to create the text on the real canvas
       return {
@@ -622,26 +636,22 @@
         h: (bounds[2] - bounds[0] + 1) * g
       };
 
-      elements.forEach(function(el) {
-        if (el.getContext) {
-          var ctx = el.getContext('2d');
-          var mu = info.mu;
-
+      // (function() {
           // Save the current state before messing it
-          ctx.save();
-          ctx.scale(1 / mu, 1 / mu);
+          wxctx.save();
+          wxctx.scale(1 / mu, 1 / mu);
 
-          ctx.font = fontWeight + ' ' +
+          wxctx.font = fontWeight + ' ' +
                      (fontSize * mu).toString(10) + 'px ' + settings.fontFamily;
-          ctx.fillStyle = color;
+                     wxctx.fillStyle = color;
 
           // Translate the canvas position to the origin coordinate of where
           // the text should be put.
-          ctx.translate((gx + info.gw / 2) * g * mu,
+          wxctx.translate((gx + info.gw / 2) * g * mu,
                         (gy + info.gh / 2) * g * mu);
 
           if (rotateDeg !== 0) {
-            ctx.rotate(- rotateDeg);
+            wxctx.rotate(- rotateDeg);
           }
 
           // Finally, fill the text.
@@ -651,62 +661,19 @@
           // Please read https://bugzil.la/737852#c6.
           // Here, we use textBaseline = 'middle' and draw the text at exactly
           // 0.5 * fontSize lower.
-          ctx.textBaseline = 'middle';
-          ctx.fillText(word, info.fillTextOffsetX * mu,
+          wxctx.textBaseline = 'middle';
+          wxctx.fillText(word, info.fillTextOffsetX * mu,
                              (info.fillTextOffsetY + fontSize * 0.5) * mu);
-
+          // wxctx.draw();
+          console.log(info.fillTextOffsetX * mu,(info.fillTextOffsetY + fontSize * 0.5) * mu)
           // The below box is always matches how <span>s are positioned
           /* ctx.strokeRect(info.fillTextOffsetX, info.fillTextOffsetY,
             info.fillTextWidth, info.fillTextHeight); */
 
           // Restore the state.
-          ctx.restore();
-        } else {
-          // drawText on DIV element
-          var span = document.createElement('span');
-          var transformRule = '';
-          transformRule = 'rotate(' + (- rotateDeg / Math.PI * 180) + 'deg) ';
-          if (info.mu !== 1) {
-            transformRule +=
-              'translateX(-' + (info.fillTextWidth / 4) + 'px) ' +
-              'scale(' + (1 / info.mu) + ')';
-          }
-          var styleRules = {
-            'position': 'absolute',
-            'display': 'block',
-            'font': fontWeight + ' ' +
-                    (fontSize * info.mu) + 'px ' + settings.fontFamily,
-            'left': ((gx + info.gw / 2) * g + info.fillTextOffsetX) + 'px',
-            'top': ((gy + info.gh / 2) * g + info.fillTextOffsetY) + 'px',
-            'width': info.fillTextWidth + 'px',
-            'height': info.fillTextHeight + 'px',
-            'lineHeight': fontSize + 'px',
-            'whiteSpace': 'nowrap',
-            'transform': transformRule,
-            'webkitTransform': transformRule,
-            'msTransform': transformRule,
-            'transformOrigin': '50% 40%',
-            'webkitTransformOrigin': '50% 40%',
-            'msTransformOrigin': '50% 40%'
-          };
-          if (color) {
-            styleRules.color = color;
-          }
-          span.textContent = word;
-          for (var cssProp in styleRules) {
-            span.style[cssProp] = styleRules[cssProp];
-          }
-          if (attributes) {
-            for (var attribute in attributes) {
-              span.setAttribute(attribute, attributes[attribute]);
-            }
-          }
-          if (classes) {
-            span.className += classes;
-          }
-          el.appendChild(span);
-        }
-      });
+          wxctx.restore();
+        
+      // })();
     };
 
     /* Help function to updateGrid */
@@ -717,14 +684,14 @@
 
       grid[x][y] = false;
 
-      if (drawMask) {
-        var ctx = elements[0].getContext('2d');
-        ctx.fillRect(x * g, y * g, maskRectWidth, maskRectWidth);
-      }
+      // if (drawMask) {
+      //   var ctx = elements[0].getContext('2d');
+      //   ctx.fillRect(x * g, y * g, maskRectWidth, maskRectWidth);
+      // }
 
-      if (interactive) {
-        infoGrid[x][y] = { item: item, dimension: dimension };
-      }
+      // if (interactive) {
+      //   infoGrid[x][y] = { item: item, dimension: dimension };
+      // }
     };
 
     /* Update the filling information of the given space with occupied points.
@@ -733,7 +700,7 @@
       var occupied = info.occupied;
       var drawMask = settings.drawMask;
       var ctx;
-      if (drawMask) {
+      if (drawMask) { //todo rm
         ctx = elements[0].getContext('2d');
         ctx.save();
         ctx.fillStyle = settings.maskColor;
@@ -770,7 +737,7 @@
     /* putWord() processes each item on the list,
        calculate it's size and determine it's position, and actually
        put it on the canvas. */
-    var putWord = function putWord(item) {
+    var putWord = async function putWord(item) {
       var word, weight, attributes;
       if (Array.isArray(item)) {
         word = item[0];
@@ -781,18 +748,18 @@
         attributes = item.attributes;
       }
       var rotateDeg = getRotateDeg();
-
       // get info needed to put the text onto the canvas
-      var info = getTextInfo(word, weight, rotateDeg);
+      var info = await getTextInfo(word, weight, rotateDeg);
 
       // not getting the info means we shouldn't be drawing this one.
-      if (!info) {
-        return false;
-      }
+      // if (!info) {
+      //   return false;
+      // }
 
-      if (exceedTime()) {
-        return false;
-      }
+      // if (exceedTime()) {
+      //   return false;
+      // }
+
 
       // If drawOutOfBound is set to false,
       // skip the loop if we have already know the bounding box of
@@ -814,9 +781,10 @@
         var gy = Math.floor(gxy[1] - info.gh / 2);
         var gw = info.gw;
         var gh = info.gh;
-
+        
         // If we cannot fit the text at this position, return false
         // and go to the next position.
+        console.log(info)
         if (!canFitText(gx, gy, gw, gh, info.occupied)) {
           return false;
         }
@@ -824,7 +792,6 @@
         // Actually put the text on the canvas
         drawText(gx, gy, info, word, weight,
                  (maxRadius - r), gxy[2], rotateDeg, attributes);
-
         // Mark the spaces on the grid as filled
         updateGrid(gx, gy, gw, gh, info, item);
 
@@ -874,25 +841,20 @@
     };
 
     /* Start drawing on a canvas */
+    var grid = [];
     var start = function start() {
       // For dimensions, clearCanvas etc.,
       // we only care about the first element.
-      var canvas = elements[0];
+      // var canvas = elements[0];
 
-      if (canvas.getContext) {
-        ngx = Math.ceil(canvas.width / g);
-        ngy = Math.ceil(canvas.height / g);
-      } else {
-        var rect = canvas.getBoundingClientRect();
-        ngx = Math.ceil(rect.width / g);
-        ngy = Math.ceil(rect.height / g);
-      }
+        ngx = Math.ceil(canvasWidth / g);
+        ngy = Math.ceil(canvasHeight / g);
 
       // Sending a wordcloudstart event which cause the previous loop to stop.
       // Do nothing if the event is canceled.
-      if (!sendEvent('wordcloudstart', true)) {
-        return;
-      }
+      // if (!sendEvent('wordcloudstart', true)) {
+      //   return;
+      // }
 
       // Determine the center of the word cloud
       center = (settings.origin) ?
@@ -904,24 +866,24 @@
 
       /* Clear the canvas only if the clearCanvas is set,
          if not, update the grid to the current canvas state */
-      grid = [];
+      
 
       var gx, gy, i;
-      if (!canvas.getContext || settings.clearCanvas) {
-        elements.forEach(function(el) {
-          if (el.getContext) {
-            var ctx = el.getContext('2d');
-            ctx.fillStyle = settings.backgroundColor;
-            ctx.clearRect(0, 0, ngx * (g + 1), ngy * (g + 1));
-            ctx.fillRect(0, 0, ngx * (g + 1), ngy * (g + 1));
-          } else {
-            el.textContent = '';
-            el.style.backgroundColor = settings.backgroundColor;
-            el.style.position = 'relative';
-          }
-        });
+      // if (settings.clearCanvas) {
+        // elements.forEach(function(el) {
+        //   if (el.getContext) {
+        //     var ctx = el.getContext('2d');
+        //     ctx.fillStyle = settings.backgroundColor;
+        //     ctx.clearRect(0, 0, ngx * (g + 1), ngy * (g + 1));
+        //     ctx.fillRect(0, 0, ngx * (g + 1), ngy * (g + 1));
+        //   } else {
+        //     el.textContent = '';
+        //     el.style.backgroundColor = settings.backgroundColor;
+        //     el.style.position = 'relative';
+        //   }
+        // });
 
-        /* fill the grid with empty state */
+        // /* fill the grid with empty state */
         gx = ngx;
         while (gx--) {
           grid[gx] = [];
@@ -930,143 +892,160 @@
             grid[gx][gy] = true;
           }
         }
-      } else {
+      // } else {
+        //背景颜色的处理 注释掉
         /* Determine bgPixel by creating
            another canvas and fill the specified background color. */
-        var bctx = document.createElement('canvas').getContext('2d');
+        // var bctx = document.createElement('canvas').getContext('2d');
 
-        bctx.fillStyle = settings.backgroundColor;
-        bctx.fillRect(0, 0, 1, 1);
-        var bgPixel = bctx.getImageData(0, 0, 1, 1).data;
+        // bctx.fillStyle = settings.backgroundColor;
+        // bctx.fillRect(0, 0, 1, 1);
+        // var bgPixel = bctx.getImageData(0, 0, 1, 1).data;
 
-        /* Read back the pixels of the canvas we got to tell which part of the
-           canvas is empty.
-           (no clearCanvas only works with a canvas, not divs) */
-        var imageData =
-          canvas.getContext('2d').getImageData(0, 0, ngx * g, ngy * g).data;
+        // /* Read back the pixels of the canvas we got to tell which part of the
+        //    canvas is empty.
+        //    (no clearCanvas only works with a canvas, not divs) */
+        // var imageData =
+        //   canvas.getContext('2d').getImageData(0, 0, ngx * g, ngy * g).data;
 
-        gx = ngx;
-        var x, y;
-        while (gx--) {
-          grid[gx] = [];
-          gy = ngy;
-          while (gy--) {
-            y = g;
-            singleGridLoop: while (y--) {
-              x = g;
-              while (x--) {
-                i = 4;
-                while (i--) {
-                  if (imageData[((gy * g + y) * ngx * g +
-                                 (gx * g + x)) * 4 + i] !== bgPixel[i]) {
-                    grid[gx][gy] = false;
-                    break singleGridLoop;
-                  }
-                }
-              }
-            }
-            if (grid[gx][gy] !== false) {
-              grid[gx][gy] = true;
-            }
-          }
-        }
+        // gx = ngx;
+        // var x, y;
+        // while (gx--) {
+        //   grid[gx] = [];
+        //   gy = ngy;
+        //   while (gy--) {
+        //     y = g;
+        //     singleGridLoop: while (y--) {
+        //       x = g;
+        //       while (x--) {
+        //         i = 4;
+        //         while (i--) {
+        //           if (imageData[((gy * g + y) * ngx * g +
+        //                          (gx * g + x)) * 4 + i] !== bgPixel[i]) {
+        //             grid[gx][gy] = false;
+        //             break singleGridLoop;
+        //           }
+        //         }
+        //       }
+        //     }
+        //     if (grid[gx][gy] !== false) {
+        //       grid[gx][gy] = true;
+        //     }
+        //   }
+        // }
 
-        imageData = bctx = bgPixel = undefined;
+        // imageData = bctx = bgPixel = undefined;
       }
 
       // fill the infoGrid with empty state if we need it
-      if (settings.hover || settings.click) {
+      // if (settings.hover || settings.click) {
 
-        interactive = true;
+      //   interactive = true;
 
-        /* fill the grid with empty state */
-        gx = ngx + 1;
-        while (gx--) {
-          infoGrid[gx] = [];
-        }
+      //   /* fill the grid with empty state */
+      //   gx = ngx + 1;
+      //   while (gx--) {
+      //     infoGrid[gx] = [];
+      //   }
 
-        if (settings.hover) {
-          canvas.addEventListener('mousemove', wordcloudhover);
-        }
+      //   if (settings.hover) {
+      //     canvas.addEventListener('mousemove', wordcloudhover);
+      //   }
 
-        var touchend = function (e) {
-          e.preventDefault();
-        };
+      //   var touchend = function (e) {
+      //     e.preventDefault();
+      //   };
 
-        if (settings.click) {
-          canvas.addEventListener('click', wordcloudclick);
-          canvas.addEventListener('touchstart', wordcloudclick);
-          canvas.addEventListener('touchend', touchend);
-          canvas.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0)';
-        }
+      //   if (settings.click) {
+      //     canvas.addEventListener('click', wordcloudclick);
+      //     canvas.addEventListener('touchstart', wordcloudclick);
+      //     canvas.addEventListener('touchend', touchend);
+      //     canvas.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0)';
+      //   }
 
-        canvas.addEventListener('wordcloudstart', function stopInteraction() {
-          canvas.removeEventListener('wordcloudstart', stopInteraction);
+      //   canvas.addEventListener('wordcloudstart', function stopInteraction() {
+      //     canvas.removeEventListener('wordcloudstart', stopInteraction);
 
-          canvas.removeEventListener('mousemove', wordcloudhover);
-          canvas.removeEventListener('click', wordcloudclick);
-          canvas.removeEventListener('touchstart', wordcloudclick);
-          canvas.removeEventListener('touchend', touchend);
-          hovered = undefined;
-        });
-      }
+      //     canvas.removeEventListener('mousemove', wordcloudhover);
+      //     canvas.removeEventListener('click', wordcloudclick);
+      //     canvas.removeEventListener('touchstart', wordcloudclick);
+      //     canvas.removeEventListener('touchend', touchend);
+      //     hovered = undefined;
+      //   });
+      // }
 
-      i = 0;
-      var loopingFunction, stoppingFunction;
-      if (settings.wait !== 0) {
-        loopingFunction = window.setTimeout;
-        stoppingFunction = window.clearTimeout;
-      } else {
-        loopingFunction = window.setImmediate;
-        stoppingFunction = window.clearImmediate;
-      }
+      var i = 0;
+      // var loopingFunction, stoppingFunction;
+      // if (settings.wait !== 0) {
+      //   loopingFunction = window.setTimeout;
+      //   stoppingFunction = window.clearTimeout;
+      // } else {
+      //   loopingFunction = window.setImmediate;
+      //   stoppingFunction = window.clearImmediate;
+      // }
 
-      var addEventListener = function addEventListener(type, listener) {
-        elements.forEach(function(el) {
-          el.addEventListener(type, listener);
-        }, this);
-      };
+      // var addEventListener = function addEventListener(type, listener) {
+      //   elements.forEach(function(el) {
+      //     el.addEventListener(type, listener);
+      //   }, this);
+      // };
 
-      var removeEventListener = function removeEventListener(type, listener) {
-        elements.forEach(function(el) {
-          el.removeEventListener(type, listener);
-        }, this);
-      };
+      // var removeEventListener = function removeEventListener(type, listener) {
+      //   elements.forEach(function(el) {
+      //     el.removeEventListener(type, listener);
+      //   }, this);
+      // };
 
-      var anotherWordCloudStart = function anotherWordCloudStart() {
-        removeEventListener('wordcloudstart', anotherWordCloudStart);
-        stoppingFunction(timer);
-      };
+      // var anotherWordCloudStart = function anotherWordCloudStart() {
+      //   removeEventListener('wordcloudstart', anotherWordCloudStart);
+      //   stoppingFunction(timer);
+      // };
 
-      addEventListener('wordcloudstart', anotherWordCloudStart);
+      // addEventListener('wordcloudstart', anotherWordCloudStart);
 
-      var timer = loopingFunction(function loop() {
-        if (i >= settings.list.length) {
-          stoppingFunction(timer);
-          sendEvent('wordcloudstop', false);
-          removeEventListener('wordcloudstart', anotherWordCloudStart);
+      //改递归
+      // var timer = loopingFunction(function loop() {
+        // if (i >= settings.list.length) {
+          // stoppingFunction(timer);
+          // sendEvent('wordcloudstop', false);
+          // removeEventListener('wordcloudstart', anotherWordCloudStart);
 
-          return;
-        }
-        escapeTime = (new Date()).getTime();
-        var drawn = putWord(settings.list[i]);
-        var canceled = !sendEvent('wordclouddrawn', true, {
-          item: settings.list[i], drawn: drawn });
-        if (exceedTime() || canceled) {
-          stoppingFunction(timer);
-          settings.abort();
-          sendEvent('wordcloudabort', false);
-          sendEvent('wordcloudstop', false);
-          removeEventListener('wordcloudstart', anotherWordCloudStart);
-          return;
-        }
-        i++;
-        timer = loopingFunction(loop, settings.wait);
-      }, settings.wait);
-    };
+          // return;
+        // }
+        // escapeTime = (new Date()).getTime();
+        // var drawn = putWord(settings.list[i]);
+        // var canceled = !sendEvent('wordclouddrawn', true, {
+        //   item: settings.list[i], drawn: drawn });
+        // if (exceedTime()) {
+          // stoppingFunction(timer);
+          // settings.abort();
+          // sendEvent('wordcloudabort', false);
+          // sendEvent('wordcloudstop', false);
+          // removeEventListener('wordcloudstart', anotherWordCloudStart);
+          // return;
+        // }
+      //   i++;
+      //   timer = loopingFunction(loop, settings.wait);
+      // }, settings.wait);
+    // };
 
     // All set, start the drawing
     start();
+    async function run(){
+      if (i >= settings.list.length) {
+        // stoppingFunction(timer);
+        // sendEvent('wordcloudstop', false);
+        // removeEventListener('wordcloudstart', anotherWordCloudStart);
+
+        return;
+      }
+      escapeTime = (new Date()).getTime();
+      var drawn = await putWord(settings.list[i]);
+      i++;
+      //递归
+      setTimeout(run,0);
+    }
+    run();
   };
 
   WordCloud.isSupported = isSupported;
