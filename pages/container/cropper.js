@@ -3,6 +3,8 @@
  * (c) 2018 dlhandsome
  * @license MIT
  */
+const regeneratorRuntime = require('../../libs/regenerator-runtime');
+
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -611,51 +613,76 @@ function methods () {
   var height = ref.height; if ( height === void 0 ) height = boundHeight;
 
   self.updateCanvas = function () {
-    if (self.croperTarget) {
-      //  画布绘制图片
-      self.ctx.drawImage(self.croperTarget, self.imgLeft, self.imgTop, self.scaleWidth, self.scaleHeight);
+    if(self.list.length>0){
+      self.list.map((e)=>{
+        self.ctx.drawImage(e.src,e.imgLeft, e.imgTop, e.scaleWidth, e.scaleHeight)
+      })
     }
+    if (self.src) {
+      //  画布绘制图片
+      self.ctx.drawImage(self.src, self.imgLeft, self.imgTop, self.scaleWidth, self.scaleHeight);
+    }
+    
     isFunction(self.onBeforeDraw) && self.onBeforeDraw(self.ctx, self);
-
-    self.setBoundStyle(); //	设置边界样式
+    if(self.src){
+      self.setBoundStyle(); //	设置边界样式
+    }
     self.ctx.draw();
     return self
   };
 
-  self.pushOrign = function (src) {
-    self.src = src;
-
+  self.pushOrign = async function (src) {
     isFunction(self.onBeforeImageLoad) && self.onBeforeImageLoad(self.ctx, self);
-
-    wx.getImageInfo({
-      src: src,
-      success: function success (res) {
-        var innerAspectRadio = res.width / res.height;
-
-        self.croperTarget = res.path;
-        
-        if (innerAspectRadio < width / height) {
-          self.rectX = x;
-          self.baseWidth = width;
-          self.baseHeight = width / innerAspectRadio;
-          self.rectY = y - Math.abs((height - self.baseHeight) / 2);
-        } else {
-          self.rectY = y;
-          self.baseWidth = height * innerAspectRadio;
-          self.baseHeight = height;
-          self.rectX = x - Math.abs((width - self.baseWidth) / 2);
+    await new Promise((resolve,reject)=>{
+      wx.getImageInfo({
+        src: src,
+        success: function success (res) {
+          if(self.imgCount>0){ //
+            //保存当前的图片
+            self.list.unshift({
+              rectX:self.rectX,
+              baseWidth:self.baseWidth,
+              baseHeight:self.baseHeight,
+              rectY:self.rectY,
+              imgLeft:self.imgLeft,
+              imgTop:self.imgTop,
+              scaleWidth:self.scaleWidth,
+              scaleHeight:self.scaleHeight,
+              url:self.url,
+              zindex:self.imgCount-1,
+              src:self.src
+            })
+          }
+          // active激活为新图片
+          var innerAspectRadio = res.width / res.height;
+  
+          self.croperTarget = res.path;
+          self.url = src;
+          self.src = res.path
+          if (innerAspectRadio < width / height) {
+            self.rectX = x;
+            self.baseWidth = width;
+            self.baseHeight = width / innerAspectRadio;
+            self.rectY = y - Math.abs((height - self.baseHeight) / 2);
+          } else {
+            self.rectY = y;
+            self.baseWidth = height * innerAspectRadio;
+            self.baseHeight = height;
+            self.rectX = x - Math.abs((width - self.baseWidth) / 2);
+          }
+  
+          self.imgLeft = self.rectX;
+          self.imgTop = self.rectY;
+          self.scaleWidth = self.baseWidth;
+          self.scaleHeight = self.baseHeight;
+          self.imgCount+=1;
+          resolve()
+          self.updateCanvas();
+  
+          isFunction(self.onImageLoad) && self.onImageLoad(self.ctx, self);
         }
-
-        self.imgLeft = self.rectX;
-        self.imgTop = self.rectY;
-        self.scaleWidth = self.baseWidth;
-        self.scaleHeight = self.baseHeight;
-
-        self.updateCanvas();
-
-        isFunction(self.onImageLoad) && self.onImageLoad(self.ctx, self);
-      }
-    });
+      });
+    }); 
 
     self.update();
     return self
@@ -754,6 +781,68 @@ function update () {
   self.__oneTouchStart = function (touch) {
     self.touchX0 = Math.round(touch.x);
     self.touchY0 = Math.round(touch.y);
+    //大概率是当前图片
+    if((self.touchX0>=self.imgLeft && self.touchX0<=(self.imgLeft+self.scaleWidth) )&&
+      self.touchY0>=self.imgTop && self.touchY0<=(self.imgTop+self.scaleHeight)){ //临时这样写吧
+        //什么都不用做
+        return;
+    }
+    //active image
+    for(let i=0,complete=false;i<self.list.length;i++){
+      let cur = self.list[i];
+      if(complete){
+        break;
+      }
+      console.log(self.touchY0>=cur.imgTop && self.touchY0<=(cur.imgLeft+cur.scaleWidth))
+      if((self.touchX0>=cur.imgLeft && self.touchX0<=(cur.imgLeft+cur.scaleWidth) )&&
+       self.touchY0>=cur.imgTop && self.touchY0<=(cur.imgTop+cur.scaleHeight)){
+         complete = true;
+         let rectX = self.rectX,
+              baseWidth=self.baseWidth,
+              baseHeight=self.baseHeight,
+              rectY=self.rectY,
+              imgLeft=self.imgLeft,
+              imgTop=self.imgTop,
+              scaleWidth=self.scaleWidth,
+              scaleHeight=self.scaleHeight,
+              url=self.url,
+              src = self.src,
+              zindex=self.zindex;
+          self.rectX = cur.rectX;
+          self.baseWidth = cur.baseWidth;
+          self.baseHeight = cur.baseHeight;
+          self.rectY = cur.rectY;
+          self.imgLeft = cur.imgLeft;
+          self.imgTop = cur.imgTop;
+          self.scaleWidth = cur.scaleWidth;
+          self.scaleHeight = cur.scaleHeight;
+          self.url = cur.url;
+          self.src = cur.src
+          self.zindex = cur.zindex;
+
+          cur.rectX = rectX;
+          cur.baseWidth = baseWidth;
+          cur.baseHeight = baseHeight;
+          cur.rectY = rectY;
+          cur.imgLeft = imgLeft;
+          cur.imgTop = imgTop;
+          cur.scaleWidth = scaleWidth;
+          cur.scaleHeight = scaleHeight;
+          cur.url = url;
+          cur.src = src;
+          cur.zindex = zindex;
+         //save当前 装载 list[index] 是一次exchange的过程
+       }
+    }
+    if((self.touchX0>=self.imgLeft && self.touchX0<=(self.imgLeft+self.scaleWidth) )&&
+      self.touchY0>=self.imgTop && self.touchY0<=(self.imgTop+self.scaleHeight)){ //临时这样写吧
+        //什么都不用做
+        return;
+    }else{
+      self.touchended = true;
+    }
+    console.log(111)
+    self.updateCanvas();
   };
 
   self.__oneTouchMove = function (touch) {
@@ -762,6 +851,7 @@ function update () {
     if (self.touchended) {
       return self.updateCanvas()
     }
+    
     xMove = Math.round(touch.x - self.touchX0);
     yMove = Math.round(touch.y - self.touchY0);
 
@@ -788,6 +878,7 @@ function update () {
   };
 
   self.__twoTouchMove = function (touch0, touch1) {
+
     var oldScale = self.oldScale;
     var oldDistance = self.oldDistance;
     var scale = self.scale;
@@ -810,10 +901,36 @@ function update () {
   };
 
   self.__xtouchEnd = function () {
+    if(self.imgTop >= self.height-self.scaleHeight/2-20){ //todo
+      console.log(1)
+      self.deleteImage();
+      self.updateCanvas();
+    }
+    //todo 删除
     self.oldScale = self.newScale;
     self.rectX = self.imgLeft;
     self.rectY = self.imgTop;
   };
+  self.deleteImage = function(){
+      if(self.list.length>0){
+        let cur = self.list[0]
+        self.rectX = cur.rectX;
+        self.baseWidth = cur.baseWidth;
+        self.baseHeight = cur.baseHeight;
+        self.rectY = cur.rectY;
+        self.imgLeft = cur.imgLeft;
+        self.imgTop = cur.imgTop;
+        self.scaleWidth = cur.scaleWidth;
+        self.scaleHeight = cur.scaleHeight;
+        self.url = cur.url;
+        self.src = cur.src
+        self.zindex = cur.zindex;
+        self.list.shift();
+      }else{
+        self.src = '';
+      }
+
+  }
 }
 
 var handle = {
@@ -856,7 +973,7 @@ var handle = {
 
   touchEnd: function touchEnd (e) {
     var self = this;
-
+    
     setTouchState(self, false, false, true);
     self.__xtouchEnd();
   }
@@ -879,6 +996,7 @@ function cut () {
 	 * @param imgTop 图片左上角纵坐标值
 	 */
   self.outsideBound = function (imgLeft, imgTop) {
+    // self.imgLeft = imgLeft+self.scaleWidth
     self.imgLeft = imgLeft >= x
       ? x
       : self.scaleWidth + imgLeft - x <= width
@@ -951,9 +1069,9 @@ var version = "1.2.0";
 var weCropper = function weCropper (params) {
   var self = this;
   var _default = {};
-
   validator(self, DEFAULT);
-
+  self.list = [];
+  self.imgCount = 0;
   Object.keys(DEFAULT).forEach(function (key) {
     _default[key] = DEFAULT[key].default;
   });
@@ -963,10 +1081,11 @@ var weCropper = function weCropper (params) {
   self.attachPage();
   self.createCtx();
   self.observer();
-  self.cutt();
+  // self.cutt();
   self.methods();
   self.init();
-  self.setBoundStyle(); //	设置边界样式
+  self.setBoundStyle();
+  // self.setBoundStyle(); //	设置边界样式
     self.ctx.draw();
   self.update();
 
@@ -976,6 +1095,7 @@ var weCropper = function weCropper (params) {
 weCropper.prototype.init = function init () {
   var self = this;
   var src = self.src;
+  self.list = [];
 
   self.version = version;
 
@@ -990,6 +1110,57 @@ weCropper.prototype.init = function init () {
   self.newScale = 1;
   return self
 };
+weCropper.prototype.outsideBound = function(imgLeft, imgTop){
+  var self = this;
+  //todo 控制边界
+  if(imgLeft <= self.width-self.scaleWidth/2 && imgLeft>= -self.scaleWidth/2){
+    self.imgLeft = imgLeft;
+  }
+  if(imgTop <= self.height-self.scaleHeight/2 && imgTop >= -self.scaleHeight/2){
+    self.imgTop = imgTop;
+  }
+}
+weCropper.prototype.setBoundStyle = function(){
+  //todo
+  let self = this;
+  let x = self.imgLeft;
+  let y = self.imgTop;
+  let step = 5;
+  let rectBorder = 5;
+  let points = [
+    { //topleft
+      x:x-step-rectBorder, //fix
+      y:y-step-rectBorder
+    },
+    { //topright
+      x:x+self.scaleWidth+step,
+      y:y-step-rectBorder
+    },
+    {//bottomright
+      x:x+self.scaleWidth+step,
+      y:y+self.scaleHeight+step
+    },
+    {//bottomleft
+      x:x-step-rectBorder,
+      y:y+self.scaleHeight+step
+    },
+    
+  ];
+  points.forEach((e,index)=>{
+    //rect 
+    self.ctx.setFillStyle('#ddd')
+    self.ctx.fillRect(e.x, e.y, rectBorder, rectBorder)
+    //line 
+      self.ctx.setStrokeStyle('#ddd')
+      // self.ctx.setLineDash([5, 10], 5); //dash
+      self.ctx.beginPath()
+      self.ctx.moveTo(points[index].x+rectBorder/2, points[index].y+rectBorder/2)
+      self.ctx.lineTo(points[(index+1)%4].x+rectBorder/2, points[(index+1)%4].y+rectBorder/2)
+      self.ctx.stroke()
+  })
+  
+  
+}
 
 Object.assign(weCropper.prototype, handle);
 

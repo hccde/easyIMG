@@ -7,8 +7,8 @@ Component({
            type:Object,
            value:{
             path: '/assets/test3.jpg',
-            width: 533,
-            height: 300
+            width: '100%',
+            height: '100%'
            },
            observer:"conImageChange"
         },

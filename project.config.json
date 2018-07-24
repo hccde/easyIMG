@@ -12,6 +12,11 @@
 	"appid": "wx7fc36dbb71f22494",
 	"projectname": "esayimg",
 	"isGameTourist": false,
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -30,7 +35,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 7,
 			"list": [
 				{
 					"id": -1,
@@ -60,6 +65,24 @@
 					"id": -1,
 					"name": "index",
 					"pathName": "pages/index/page",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "distressed",
+					"pathName": "pages/distressed/page",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "mix-face",
+					"pathName": "pages/mix-face/page",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "container",
+					"pathName": "pages/container/page",
 					"query": ""
 				}
 			]

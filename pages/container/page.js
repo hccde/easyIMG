@@ -60,13 +60,13 @@ Page({
     this.data.height = systemInfo.windowHeight/2;
     this.data.cut =  {
       x: (this.data.width - cropperWidth) / 2, // 裁剪框x轴起点
-      y: (this.data.height - cropperWidth-40) / 2, // 裁剪框y轴期起点
-      width: cropperWidth, // 裁剪框宽度
-      height: cropperWidth+40 // 裁剪框高度
+      y: (this.data.height - cropperWidth) / 2, // 裁剪框y轴期起点
+      width: 100, // 裁剪框宽度
+      height: 100  // 裁剪框高度
     };
     this.setData({
       ...this.data
-    },()=>{
+    },async ()=>{
       this.wecropper = new WeCropper(this.data)
       .on('ready', (ctx) => {
         console.log(`wecropper is ready for work!`)
@@ -86,7 +86,8 @@ Page({
         console.log(ctx)
         wx.hideToast()
       });
-      this.wecropper.pushOrign('https://www.baidu.com/img/bd_logo1.png?where=super')
+      await this.wecropper.pushOrign('https://www.baidu.com/img/bd_logo1.png?where=super')
+      this.wecropper.pushOrign('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532408561868&di=2740afa12eb91164bd52ff7e8c4c8b17&imgtype=0&src=http%3A%2F%2Fimg01.taopic.com%2F150718%2F240511-150GPI10834.jpg')
     })
   }
 })

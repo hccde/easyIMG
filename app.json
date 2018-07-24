@@ -1,8 +1,11 @@
 {
   "pages":[
+    "pages/cropper/page",
+    "pages/container/page",
+    "pages/mix-face/page",
+    "pages/distressed/page",
     "pages/index/page",
     "pages/platform/page",
-    "pages/cropper/page",
     "pages/authorization/page"
   ],
   "window": {

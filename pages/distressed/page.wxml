@@ -1,0 +1,4 @@
+<view>
+  <canvas canvas-id="distressed" class="canvas" ></canvas>
+  <image src="{{src}}" style="width:395px;height:395px;"></image>
+</view>
